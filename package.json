@@ -27,11 +27,14 @@
     "nyc": "11.4.1"
   },
   "dependencies": {
-    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-es2015": "6.24.1",
     "babel-register": "6.26.0",
     "bluebird": "3.5.1",
+    "boom": "7.1.1",
+    "gun": "0.9.9",
     "hapi": "17.2.0",
     "inert": "5.1.0",
+    "joi": "13.1.1",
     "moment": "2.20.1",
     "pem": "1.12.3"
   }

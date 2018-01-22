@@ -1,5 +1,12 @@
 # gun-host
-HTTP/HTTPS host to facilitate usage of [Gun](http://gun.js.org) 
+It is a HTTP/HTTPS host to facilitate usage of [Gun](http://gun.js.org) 
+
+# Usage
+
+## Run host
+```
+npm start
+```
 
 # Development
 
