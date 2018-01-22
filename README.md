@@ -2,9 +2,10 @@
 It is a HTTP/HTTPS host to facilitate usage of [Gun](http://gun.js.org) 
 
 # Usage
+All the following instructions are for Linux.
 
 ## Install Node.js
-Learn about [NVM](https://github.com/creationix/nvm).
+Install [NVM](https://github.com/creationix/nvm). Remove existing Node.js if it was not installed via NVM.
 1. Go into app directory
 ```
 cd gun-host
