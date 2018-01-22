@@ -1,0 +1,38 @@
+{
+  "name": "gun-host",
+  "version": "1.0.0",
+  "description": "HTTP/HTTPS server which runs Gun",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node bootstrap.js",
+    "dev": "nodemon --inspect bootstrap.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sergibondarenko/gun-host.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sergibondarenko/gun-host/issues"
+  },
+  "homepage": "https://github.com/sergibondarenko/gun-host#readme",
+  "devDependencies": {
+    "eslint": "4.16.0",
+    "eslint-config-google": "0.9.1",
+    "expect.js": "0.3.1",
+    "mocha": "5.0.0",
+    "nyc": "11.4.1"
+  },
+  "dependencies": {
+    "babel-preset-es2015": "^6.24.1",
+    "babel-register": "6.26.0",
+    "bluebird": "3.5.1",
+    "hapi": "17.2.0",
+    "inert": "5.1.0",
+    "moment": "2.20.1",
+    "pem": "1.12.3"
+  }
+}
