@@ -1,0 +1,11 @@
+{
+  "include": [
+    "server/**/*.js"
+  ],
+  "exclude": [
+    "server/**/__test__/*.js"
+  ],
+  "cache": true,
+  "all": true
+}
+

@@ -2,10 +2,9 @@
 
 import Hapi from 'hapi';
 import config from './config';
+import allRoutes from './routes/routes';
 
-import gunRoutes from './routes/gun';
-
-const server = new Hapi.Server({port: config.port, host: config.host});
+const server = new Hapi.Server({port: config.server.port, host: config.server.host});
 
 /**
 * Register plugins
@@ -20,7 +19,7 @@ async function registerPlugins() {
 * Enable server routes
 */
 function enableRoutes() {
-  [gunRoutes].forEach(function(routes) {
+  [allRoutes].forEach(function(routes) {
     routes.forEach(function(route) {
       server.route(route);
     });

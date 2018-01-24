@@ -1,39 +1,40 @@
 module.exports = {
-  "extends": "google",
-  "parser": "babel-eslint",
-  "rules": {
-    "env": {
-      "browser": false,
-      "es6": true,
+  'extends': 'google',
+  'parser': 'babel-eslint',
+  'rules': {
+    'env': {
+      'browser': false,
+      'es6': true,
     },
-    "parserOptions": {
-      "sourceType": "module",
+    'parserOptions': {
+      'sourceType': 'module',
     },
-    "extends": [
-      "eslint:recommended",
-      "google",
+    'extends': [
+      'eslint:recommended',
+      'google',
     ],
-    "keyword-spacing": ["error"],
-    "no-trailing-spaces": [
+    'keyword-spacing': ['error'],
+    'max-len': ['error', {'code': 120}],
+    'no-trailing-spaces': [
       2,
-      { "skipBlankLines": true }
+      {'skipBlankLines': true},
     ],
-    "no-console": 0,
-    "indent": [
-      "error",
-      2
+    'no-console': 0,
+    'indent': [
+      'error',
+      2,
     ],
-    "linebreak-style": [
-      "error",
-      "unix"
+    'linebreak-style': [
+      'error',
+      'unix',
     ],
-    "quotes": [
-      "error",
-      "single"
+    'quotes': [
+      'error',
+      'single',
     ],
-    "semi": [
-      "error",
-      "always"
-    ]
-  }
+    'semi': [
+      'error',
+      'always',
+    ],
+  },
 };
