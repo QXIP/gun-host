@@ -20,8 +20,8 @@
   },
   "homepage": "https://github.com/sergibondarenko/gun-host#readme",
   "devDependencies": {
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
+    "babel-polyfill": "6.26.0",
+    "babel-preset-env": "1.6.1",
     "babel-preset-es2015": "6.24.1",
     "babel-register": "6.26.0",
     "eslint": "4.16.0",
@@ -39,7 +39,7 @@
     "joi": "13.1.1",
     "moment": "2.20.1",
     "pem": "1.12.3",
-    "uuid": "^3.2.1"
+    "uuid": "3.2.1"
   },
   "nyc": {
     "require": [

@@ -32,6 +32,21 @@ To config the host, edit properties in `server/config.js`.
 npm start
 ```
 
+# Usage
+
+## Create node
+```
+curl -X POST http://localhost:7001/node/create -d '{"path": "dinos.456", "node": {"name": "velociraptor", "speed": 50, "force": 20}}'
+```
+## Get node
+```
+curl -d '{"path": "dinos.456"}' -X POST http://localhost:7001/node/get
+```
+## Delete node
+```
+curl -d '{"path": "dinos.456"}' -X POST http://localhost:7001/node/delete
+```
+
 # Development
 
 ## Install dev tools

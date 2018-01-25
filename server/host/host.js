@@ -11,9 +11,7 @@ class Host {
   */
   constructor(config) {
     this.config = config;
-    this.nodes = {
-      cluster: new Node(config.gun.peers, config.gun.name),
-    };
+    this.cluster = new Node(config.gun.peers, config.gun.name);
   }
 
   /**
@@ -21,8 +19,48 @@ class Host {
   *
   * @return {object} host node
   */
-  async init() {
-    return await this.nodes.cluster.put(this.config.host.parent_node + '.' + this.config.host.id, this.config.host);
+  init() {
+    return this.cluster.put(this.config.host.parent_node + '.' + this.config.host.id, this.config.host);
+  }
+
+  /**
+  * Display all cluster nodes
+  *
+  * @return {object} host node
+  */
+  showClusterNodes() {
+    return this.cluster.load(this.config.host.parent_node);
+  }
+
+  /**
+  * Create new node
+  *
+  * @param {string} path for node - a or a.b.c
+  * @param {object} node
+  * @return {object} host node
+  */
+  addNode(path, node) {
+    return this.cluster.put(path, node);
+  }
+
+  /**
+  * Get node
+  *
+  * @param {string} path for node - a or a.b.c
+  * @return {object} host node
+  */
+  getNode(path) {
+    return this.cluster.load(path);
+  }
+
+  /**
+  * Delete node
+  *
+  * @param {string} path for node - a or a.b.c
+  * @return {object} null
+  */
+  deleteNode(path) {
+    return this.cluster.delete(path);
   }
 }
 
