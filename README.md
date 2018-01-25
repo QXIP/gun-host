@@ -24,6 +24,9 @@ nvm install 8.9.4
 nvm use 8.9.4
 ``` 
 
+## Config host
+To config the host, edit properties in `server/config.js`.
+
 ## Run host
 ```
 npm start

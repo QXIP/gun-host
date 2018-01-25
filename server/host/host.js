@@ -1,57 +1,28 @@
-import Queue from './queue';
-import Task from './task';
+import Node from './node';
 
 /**
-* Cluster host
+* A class to manage this host
 */
 class Host {
   /**
   * Constructor
   *
-  * @param {object} config - host config
+  * @param {object} config
   */
   constructor(config) {
     this.config = config;
-    this.queues = new Queue(config.cluster);
+    this.nodes = {
+      cluster: new Node(config.cluster.peers, config.cluster.name),
+    };
   }
 
   /**
   * Init host
   *
-  * @return {object} promise ack
+  * @return {object} host node
   */
   async init() {
-    await this.queues.create(this.config.cluster.name + '._hosts');
-    this.hosts = new Task('_hosts', this.config.cluster);
-    return this.hosts.add(this.config.host);
-  }
-
-  /**
-  * Get all cluster peers
-  *
-  * @return {array} peers
-  */
-  peers() {
-    return this.hosts.list();
-  }
-
-  /**
-  * Delete host
-  *
-  * @param {string|integer} id of host
-  * @return {object} ack
-  */
-  delete(id) {
-    return this.hosts.delete(id);
-  }
-
-  /**
-  * Get host time
-  *
-  * @return {integer} unix time
-  */
-  time() {
-    return Math.round((new Date()).getTime() / 1000);
+    return await this.nodes.cluster.put(this.config.host.parent_node + '.' + this.config.host.id, this.config.host);
   }
 }
 

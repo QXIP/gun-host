@@ -7,19 +7,19 @@ require('gun/lib/load');
 require('gun/lib/then');
 
 /**
-* Interface for Gun
+* A class to manage Gun nodes.
 */
-class Cluster {
+class Node {
   /**
   * Constructor
   *
-  * @param {object} config - cluster config
+  * @param {object} peers of Gun
+  * @param {object} name of the node
   */
-  constructor(config) {
-    this.name = config.name;
-    this.config = config;
-    this.gun = new Gun({peers: config.peers});
-    this.node = this.gun.get(config.name);
+  constructor(peers, name) {
+    this.name = name;
+    this.gun = new Gun({peers});
+    this.node = this.gun.get(name);
   }
 
 
@@ -47,7 +47,7 @@ class Cluster {
   *
   * @param {string} pathway - a.b.c or a
   * @param {object} value
-  * @return {object} ack
+  * @return {object} new Gun node which contains value properties
   */
   async put(pathway, value) {
     return await this.node.path(pathway).put(value).then();
@@ -94,4 +94,4 @@ class Cluster {
   }
 }
 
-export default Cluster;
+export default Node;
