@@ -1,5 +1,5 @@
 import Promise from 'bluebird';
-import {filter} from 'lodash';
+import {forEach} from 'lodash';
 import Gun from 'gun';
 require('gun/lib/path');
 require('gun/lib/load');
@@ -31,11 +31,24 @@ class Node {
   */
   load(pathway, filterNull = true) { // async/await is not used here because it doesn't work with Gun .load()
     return this.exists(pathway).then((exists) => {
-      if (!exists) return null;
+      if (!exists) {
+        return null;
+      }
+
       return new Promise((resolve, reject) => {
-        this.node.path(pathway).load(function(values) {
-          values = !filterNull ? filter(values, (v) => v || !v) : filter(values, (v) => v);
-          resolve(values);
+        this.node.path(pathway).load(function(object) {
+          if (!filterNull) {
+            resolve(object);
+          }
+
+          const result = {};
+          forEach(object, function(value, key) {
+            if (value) {
+              result[key] = value;
+            }
+          });
+
+          resolve(result);
         });
       });
     });

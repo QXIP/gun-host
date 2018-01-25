@@ -58,9 +58,8 @@ describe('Node', function() {
   });
 
   it('get all properties of object', function() {
-    return node.load(host.parent_node).then(function(objects) {
-      expect(objects.length).to.eql(1);
-      expect(objects[0].id).to.eql(host.id);
+    return node.load(host.parent_node).then(function(value) {
+      expect(value[host.id]).to.be.an('object');
     });
   });
 
