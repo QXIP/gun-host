@@ -1,5 +1,4 @@
 import Promise from 'bluebird';
-import 'babel-polyfill';
 import {filter} from 'lodash';
 import Gun from 'gun';
 require('gun/lib/path');

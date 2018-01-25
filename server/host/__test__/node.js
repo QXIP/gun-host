@@ -7,7 +7,7 @@ import Gun from 'gun';
 * This tests the following object
 *
 * gun_root: {
-*   test_cluster: {
+*   test_gun: {
 *     hosts: {
 *       '123': {
 *         id: '123',
@@ -19,9 +19,9 @@ import Gun from 'gun';
 */
 
 const config = {
-  cluster: {
+  gun: {
     peers: [],
-    name: 'test_cluster',
+    name: 'test_gun',
   },
   host: {
     id: '123',
@@ -30,13 +30,13 @@ const config = {
   },
 };
 
-const node = new Node(config.cluster.peers, config.cluster.name);
-const gun = new Gun({peers: config.cluster.peers});
+const node = new Node(config.gun.peers, config.gun.name);
+const gun = new Gun({peers: config.gun.peers});
 const host = config.host;
 
 describe('Node', function() {
   after(function() {
-    gun.get(config.cluster.name).put({});
+    gun.get(config.gun.name).put({});
   });
 
   it('add new', function() {

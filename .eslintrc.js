@@ -14,7 +14,7 @@ module.exports = {
       'google',
     ],
     'keyword-spacing': ['error'],
-    'max-len': ['error', {'code': 120}],
+    'max-len': ['error', {'code': 140}],
     'no-trailing-spaces': [
       2,
       {'skipBlankLines': true},

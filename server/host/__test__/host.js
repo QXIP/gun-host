@@ -20,7 +20,7 @@ import Gun from 'gun';
 */
 
 const config = {
-  cluster: {
+  gun: {
     peers: [],
     name: 'test_cluster',
   },
@@ -32,11 +32,11 @@ const config = {
 };
 
 const host = new Host(config);
-const gun = new Gun({peers: config.cluster.peers});
+const gun = new Gun({peers: config.gun.peers});
 
 describe('Host', function() {
   after(function() {
-    gun.get(config.cluster.name).put({});
+    gun.get(config.gun.name).put({});
   });
 
   it('init', function() {

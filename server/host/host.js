@@ -12,7 +12,7 @@ class Host {
   constructor(config) {
     this.config = config;
     this.nodes = {
-      cluster: new Node(config.cluster.peers, config.cluster.name),
+      cluster: new Node(config.gun.peers, config.gun.name),
     };
   }
 

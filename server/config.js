@@ -1,15 +1,32 @@
 export default {
   server: { // HTTP/HTTPS server
-    port: 7000,
+    http_port: 7001,
+    https_port: 7000,
     host: 'localhost',
+    debug: true,
+    tls: true,
+    keys: { // TLS keys
+      serviceKey: undefined, // pem key
+      certificate: undefined,
+    },
   },
-  cluster: {
+  gun: {
+    name: 'jurassic', // default parent Gun node name for all peers
     peers: [ // Gun peers
       'https://127.0.0.1:8888/gun',
     ],
-    name: 'jurassic', // default Gun node name for all peers
+    http_port: 8001,
+    https_port: 8000,
+    host: 'localhost',
+    debug: true,
+    tls: true,
+    keys: { // TLS keys
+      serviceKey: undefined, // pem key
+      certificate: undefined,
+    },
+    local_db: 'data.json',
   },
-  host: { // default Gun node for this host
+  host: { // default Gun node for this host, children of config.gun.name node
     id: '123',
     name: 'trex',
     parent_node: 'hosts',

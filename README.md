@@ -43,3 +43,8 @@ npm install -g eslint eslint-babel nodemon eslint-config-google
 ```
 npm run dev
 ```
+
+## Test
+```
+npm run test
+```
