@@ -90,10 +90,11 @@ class Node {
   * Delete data
   *
   * @param {string} pathway - a.b.c or a
-  * @return {object} null
+  * @return {object} message
   */
   async delete(pathway) {
-    return await this.node.path(pathway).put(null).then();
+    await this.node.path(pathway).put(null).then();
+    return {message: 'deleted'};
   }
 
   /**

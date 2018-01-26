@@ -65,7 +65,7 @@ describe('Node', function() {
 
   it('delete property', function() {
     return node.delete(host.parent_node + '.' + host.id).then(function(ack) {
-      expect(ack).to.eql(null);
+      expect(ack.message).to.eql('deleted');
     });
   });
 
