@@ -36,21 +36,24 @@ npm start
 
 ## Create node
 ```
-curl -X POST http://localhost:7001/node/create -d '{"path": "dinos.456", "node": {"name": "velociraptor", "speed": 50, "force": 20}}'
+curl -H "Content-Type: application/json" -d '{"path": "dinos.456", "node": {"name": "velociraptor", "speed": 50, "force": 20}}' -X POST http://localhost:7001/node/create 
+
 {"_":{"#":"jcuri9qkWxVJXvqCZpTZ",">":{"name":1516901686580.001,"speed":1516901686580.001,"force":1516901686580.001}},"name":"velociraptor","speed":50,"force":20}
 ```
 ## Get node
 ```
-curl -d '{"path": "dinos.456"}' -X POST http://localhost:7001/node/get
+curl -H "Content-Type: application/json" -d '{"path": "dinos.456"}' -X POST http://localhost:7001/node/get
+
 {"name":"velociraptor","speed":50,"force":20}
 ```
 ```
-curl -d '{"path": "dinos"}' -X POST http://localhost:7001/node/get
+curl -H "Content-Type: application/json" -d '{"path": "dinos"}' -X POST http://localhost:7001/node/get
+
 {"456":{"name":"velociraptor","speed":50,"force":20}}
 ```
 ## Delete node
 ```
-curl -d '{"path": "dinos.456"}' -X POST http://localhost:7001/node/delete
+curl -H "Content-Type: application/json" -d '{"path": "dinos.456"}' -X POST http://localhost:7001/node/delete
 ```
 
 # Development

@@ -11,7 +11,7 @@ class Host {
   */
   constructor(config) {
     this.config = config;
-    this.cluster = new Node(config.gun.peers, config.gun.name);
+    this.node = new Node(config.gun.peers, config.gun.name);
   }
 
   /**
@@ -20,7 +20,7 @@ class Host {
   * @return {object} host node
   */
   init() {
-    return this.cluster.put(this.config.host.parent_node + '.' + this.config.host.id, this.config.host);
+    return this.node.put(this.config.host.parent_node + '.' + this.config.host.id, this.config.host);
   }
 
   /**
@@ -29,7 +29,7 @@ class Host {
   * @return {object} host node
   */
   showClusterNodes() {
-    return this.cluster.load(this.config.host.parent_node);
+    return this.node.load(this.config.host.parent_node);
   }
 
   /**
@@ -40,7 +40,7 @@ class Host {
   * @return {object} host node
   */
   addNode(path, node) {
-    return this.cluster.put(path, node);
+    return this.node.put(path, node);
   }
 
   /**
@@ -50,7 +50,7 @@ class Host {
   * @return {object} host node
   */
   getNode(path) {
-    return this.cluster.load(path);
+    return this.node.load(path);
   }
 
   /**
@@ -60,7 +60,7 @@ class Host {
   * @return {object} null
   */
   deleteNode(path) {
-    return this.cluster.delete(path);
+    return this.node.delete(path);
   }
 }
 
