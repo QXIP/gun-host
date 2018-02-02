@@ -2,7 +2,7 @@ export default {
   server: { // HTTP/HTTPS server
     http_port: 7001,
     https_port: 7000,
-    host: 'localhost',
+    host: '0.0.0.0',
     debug: true,
     tls: true,
     keys: { // TLS keys
@@ -13,11 +13,10 @@ export default {
   gun: {
     name: 'jurassic', // default parent Gun node name for all peers
     peers: [ // Gun peers
-      'https://127.0.0.1:8888/gun',
+      'https://127.0.0.1:8000/gun',
     ],
-    http_port: 8001,
-    https_port: 8000,
-    host: 'localhost',
+    port: 8000,
+    host: '0.0.0.0',
     debug: true,
     tls: true,
     keys: { // TLS keys
