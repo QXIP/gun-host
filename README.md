@@ -71,7 +71,7 @@ docker build -t <your username>/gun-host .
 ```
 ## Run container
 ```
-udo docker run -p 0.0.0.0::7000 -p 0.0.0.0::7001 -p 0.0.0.0::8000 -p 0.0.0.0::8001 -d sergibondarenko/gun-host
+docker run -p 0.0.0.0::7000 -p 0.0.0.0::7001 -p 0.0.0.0::8000 -p 0.0.0.0::8001 -d sergibondarenko/gun-host
 ```
 ## Test
 ### Show the running container process, binded network ports, status etc.
