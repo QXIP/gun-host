@@ -96,15 +96,6 @@ class Node {
     await this.node.path(pathway).put(null).then();
     return {message: 'deleted'};
   }
-
-  /**
-  * Self-destruct node
-  *
-  * @return {object} null
-  */
-  async _selfDestruct() {
-    return await this.gun.get(this.name).put({}).then();
-  }
 }
 
 export default Node;
