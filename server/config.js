@@ -14,10 +14,8 @@ export default {
     name: 'jurassic', // default parent Gun node name for all peers
     peers: [ // Gun peers
       'https://127.0.0.1:8000/gun',
-      'https://127.0.0.1:32791/gun',
     ],
-    http_port: 8001,
-    https_port: 8000,
+    port: 8000,
     host: '0.0.0.0',
     debug: true,
     tls: true,

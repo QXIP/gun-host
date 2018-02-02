@@ -1,7 +1,7 @@
 import Promise from 'bluebird';
 import Hapi from 'hapi';
 import Gun from 'gun';
-import {forEach, includes} from 'lodash';
+import {forEach} from 'lodash';
 import certificate from './lib/certificate';
 
 import nodeRoutes from './routes/routes';
@@ -91,25 +91,25 @@ async function main() {
     servers.https = await init(config.server.host, config.server.https_port, config.server.debug, config.server.tls, config.server.keys);
   }
 
-  const db = {};
   // Gun server
-  servers.gun_http = await init(config.gun.host, config.gun.http_port, config.gun.debug);
-  db.http = new Gun({web: servers.gun_http.listener, file: config.gun.local_db});
-  if (config.gun.tls) {
-    servers.gun_https = await init(config.gun.host, config.gun.https_port, config.gun.debug, config.gun.tls, config.gun.keys);
-    db.https = new Gun({web: servers.gun_https.listener, file: config.gun.local_db});
-  }
+  servers.gun = await init(config.gun.host, config.gun.port, config.gun.debug, config.gun.tls, config.gun.keys);
+  const db = {};
+  db.gun = new Gun({web: servers.gun.listener, file: config.gun.local_db});
 
   // Start
   return Promise.each(Object.keys(servers), async function(type) {
     await register(servers[type]);
-    if (includes(type, 'gun')) {
+    if (type === 'gun') {
       await start(servers[type]);
     } else {
       enableRoutes(servers[type], [nodeRoutes]);
       await start(servers[type]);
     }
   });
+}
+
+if (!config.gun.keys.serviceKey || !config.gun.keys.certificate) {
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 }
 
 main().then(function() {
