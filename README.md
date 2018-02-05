@@ -1,10 +1,15 @@
 # gun-host
 It is a HTTP/HTTPS host to facilitate usage of [Gun](http://gun.js.org) 
 
-# Run app
+1. [Run](#run)
+2. [API](#api)
+3. [Development](#development)
+4. [Docker](#docker)
+
+# Run
 All the following instructions are for Linux.
 ## Install Node.js
-Install [NVM](https://github.com/creationix/nvm). Remove existing Node.js if it was not installed via NVM.
+Use [NVM](https://github.com/creationix/nvm) to manage Node.js versions. Remove existing Node.js if it was not installed via NVM. Install it via NVM.
 1. Go into app directory
 ```
 cd gun-host
@@ -30,25 +35,31 @@ To config the host, edit properties in `server/config.js`.
 npm start
 ```
 
-# Usage
-## Create node
+# API
+## Add
+Create `dinos.456` node. 
 ```
 curl -H "Content-Type: application/json" -d '{"path": "dinos.456", "node": {"name": "velociraptor", "speed": 50, "force": 20}}' -X POST http://localhost:7001/node/create 
-
+```
+```
 {"_":{"#":"jcuri9qkWxVJXvqCZpTZ",">":{"name":1516901686580.001,"speed":1516901686580.001,"force":1516901686580.001}},"name":"velociraptor","speed":50,"force":20}
 ```
-## Get node
+## Get
+Get `dinos.456` node. 
 ```
 curl -H "Content-Type: application/json" -d '{"path": "dinos.456"}' -X POST http://localhost:7001/node/get
-
+```
+```
 {"name":"velociraptor","speed":50,"force":20}
 ```
+Get all nodes under `dinos`.
 ```
 curl -H "Content-Type: application/json" -d '{"path": "dinos"}' -X POST http://localhost:7001/node/get
-
+```
+```
 {"456":{"name":"velociraptor","speed":50,"force":20}}
 ```
-## Delete node
+## Delete
 ```
 curl -H "Content-Type: application/json" -d '{"path": "dinos.456"}' -X POST http://localhost:7001/node/delete
 ```
