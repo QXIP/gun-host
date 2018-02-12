@@ -1,11 +1,3 @@
-#gun-host
-It is a lib to run [Gun](http://gun.js.org) host in Node.js
-
-1. [Usage](#usage)
-
-# Usage
-This example illustrate creating cluster node with name `sentinl` and adding `config.host` as its node under `hosts`.
-```
 const GunHost = require('../src/gun-host');
 
 const config = {
@@ -59,4 +51,3 @@ const main = async function() {
 };
 
 main();
-```

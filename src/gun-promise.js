@@ -1,14 +1,14 @@
-import Promise from 'bluebird';
-import {forEach} from 'lodash';
-import Gun from 'gun';
+const Promise = require('bluebird');
+const {forEach} = require('lodash');
+const Gun = require('gun');
 require('gun/lib/path');
 require('gun/lib/load');
 require('gun/lib/then');
 
 /**
-* A class to manage Gun nodes.
+* Abstract access to Gun DB
 */
-class Node {
+class GunPromise {
   /**
   * Constructor
   *
@@ -21,7 +21,6 @@ class Node {
     this.node = this.gun.get(name);
   }
 
-
   /**
   * Get object and all its children
   *
@@ -29,25 +28,22 @@ class Node {
   * @param {boolean} filterNull - filter 'null' values in the 1st level
   * @return {array} value
   */
-  load(pathway, filterNull = true) { // async/await is not used here because it doesn't work with Gun .load()
+  load(pathway, filterNull = true) {
     return this.exists(pathway).then((exists) => {
       if (!exists) {
         return null;
       }
-
       return new Promise((resolve, reject) => {
         this.node.path(pathway).load(function(object) {
           if (!filterNull) {
             resolve(object);
           }
-
           const result = {};
           forEach(object, function(value, key) {
             if (value) {
               result[key] = value;
             }
           });
-
           resolve(result);
         });
       });
@@ -90,12 +86,12 @@ class Node {
   * Delete data
   *
   * @param {string} pathway - a.b.c or a
-  * @return {object} message
+  * @return {string} message
   */
   async delete(pathway) {
     await this.node.path(pathway).put(null).then();
-    return {message: 'deleted'};
+    return 'deleted';
   }
 }
 
-export default Node;
+module.exports = GunPromise;
