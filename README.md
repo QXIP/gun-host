@@ -1,4 +1,4 @@
-#gun-host
+# gun-host
 It is a lib to run [Gun](http://gun.js.org) host in Node.js
 
 1. [Install](#install)
