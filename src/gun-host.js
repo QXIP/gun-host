@@ -8,20 +8,22 @@ class GunHost {
   /**
   * Constructor
   *
-  * @param {object} config of cluster
+  * @param {object} config:
+  *        {array} peers - list of Gun hosts
+  *        {string} rootNodeName - parent for all nodes of this Gun host
   */
   constructor(config) {
-    this.config = config;
-    this.host = new GunPromise(this.config.gun.peers, this.config.name); 
+    this.host = new GunPromise(config.peers, config.rootNodeName);
   }
 
   /**
   * Start gun server
   *
+  * @param {object} config
   * @return {string} ack or err
   */
-  start() {
-    const server = new Server(this.config);
+  start(config) {
+    const server = new Server(config);
     return server.start();
   }
 

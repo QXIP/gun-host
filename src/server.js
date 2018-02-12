@@ -10,7 +10,14 @@ class Server {
   /**
   * Constructor
   *
-  * @param {object} config of cluster
+  * @param {object} config:
+  *        {integer} port
+  *        {string} cache - file name to store Gun data
+  *        {object} cert
+  *               {boolean} selfsigned - certificate
+  *               {integer} valid - for n days
+  *               {string} key - pem
+  *               {string} cert
   */
   constructor(config) {
     this.config = config;
@@ -26,7 +33,7 @@ class Server {
     const server = new Hapi.Server();
 
     server.connection({
-      port: this.config.gun.port,
+      port: this.config.port,
       tls: {
         key: keys.serviceKey,
         cert: keys.certificate,
@@ -34,7 +41,7 @@ class Server {
     });
 
     server.connections.forEach((con) => {
-      gun({web: con.listener, file: this.config.gun.cache});
+      gun({web: con.listener, file: this.config.cache});
     });
 
     return new Promise(function(resolve, reject) {

@@ -41,11 +41,18 @@ const config = {
   },
 };
 
-const node = new GunHost(config);
+const node = new GunHost({
+  peers: config.gun.peers,
+  rootNodeName: config.name,
+});
 
 const main = async function() {
   try {
-    let resp = await node.start();
+    let resp = await node.start({
+      port: config.gun.port,
+      cache: config.gun.cache,
+      cert: config.cert,
+    });
     console.log('1. Start server:', resp);
 
     resp = await node.add(`${config.host.node}.${config.host.id}`, config.host);
