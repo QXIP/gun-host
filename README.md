@@ -1,7 +1,13 @@
 #gun-host
 It is a lib to run [Gun](http://gun.js.org) host in Node.js
 
-1. [Usage](#usage)
+1. [Install](#install)
+2. [Usage](#usage)
+
+# Install
+```
+npm install --save https://github.com/QXIP/gun-host
+```
 
 # Usage
 This example illustrate creating cluster node with name `sentinl` and adding `config.host` as its node under `hosts`.
