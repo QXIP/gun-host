@@ -8,15 +8,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sergibondarenko/gun-host-2.git"
+    "url": "git+https://github.com/sergibondarenko/gun-host.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/sergibondarenko/gun-host-2/issues"
+    "url": "https://github.com/sergibondarenko/gun-host/issues"
   },
-  "homepage": "https://github.com/sergibondarenko/gun-host-2#readme",
+  "homepage": "https://github.com/sergibondarenko/gun-host#readme",
   "dependencies": {
     "bluebird": "3.5.1",
     "gun": "0.9.93",
