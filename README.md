@@ -51,6 +51,7 @@ const node = new GunHost({
 const main = async function() {
   try {
     let resp = await node.start({
+      host: config.gun.host,
       port: config.gun.port,
       cache: config.gun.cache,
       cert: config.cert,

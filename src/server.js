@@ -11,9 +11,10 @@ class Server {
   * Constructor
   *
   * @param {object} config:
+  *        {string} host
   *        {integer} port
   *        {string} cache - file name to store Gun data
-  *        {object} cert
+  *        {object} cert:
   *               {boolean} selfsigned - certificate
   *               {integer} valid - for n days
   *               {string} key - pem
@@ -33,6 +34,7 @@ class Server {
     const server = new Hapi.Server();
 
     server.connection({
+      host: this.config.host,
       port: this.config.port,
       tls: {
         key: keys.serviceKey,
