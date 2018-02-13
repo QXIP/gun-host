@@ -57,8 +57,15 @@ class GunPromise {
   * @param {object} value
   * @return {object} new Gun node which contains value properties
   */
-  async put(pathway, value) {
-    return await this.node.path(pathway).put(value).then();
+  put(pathway, value) {
+    return new Promise((resolve, reject) => {
+      return this.node.path(pathway).put(value, function(ack) {
+        if (ack.error) {
+          reject(ack.error);
+        }
+        resolve(ack);
+      });
+    });
   }
 
   /**
@@ -67,9 +74,12 @@ class GunPromise {
   * @param {string} pathway - a.b.c or a
   * @return {boolean}
   */
-  async exists(pathway) {
-    const value = await this.node.path(pathway).val().then();
-    return value ? true : false;
+  exists(pathway) {
+    return new Promise((resolve, reject) => {
+      this.node.path(pathway).val(function(value) {
+        resolve(value ? true : false);
+      }); 
+    }); 
   }
 
   /**
@@ -78,8 +88,12 @@ class GunPromise {
   * @param {string} pathway - a.b.c or a
   * @return {object} value
   */
-  async path(pathway) {
-    return await this.node.path(pathway).val().then();
+  path(pathway) {
+    return new Promise((resolve, reject) => {
+      this.node.path(pathway).val(function(value) {
+        resolve(value);
+      });
+    });
   }
 
   /**
@@ -88,9 +102,14 @@ class GunPromise {
   * @param {string} pathway - a.b.c or a
   * @return {string} message
   */
-  async delete(pathway) {
-    await this.node.path(pathway).put(null).then();
-    return 'deleted';
+  delete(pathway) {
+    return new Promise((resolve, reject) => {
+      // Gun bug, unable to delete a value: https://github.com/amark/gun/issues/456
+      // 'null' put here to facilitate filtering deleted values
+      this.node.path(pathway).put(null);
+      // Gun bug, .put(cb) callback is not resolved if value is null: https://github.com/amark/gun/issues/453
+      resolve(null);
+    });
   }
 }
 

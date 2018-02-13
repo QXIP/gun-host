@@ -59,7 +59,7 @@ class Server {
   *
   * @return {string} ack or err
   */
-  async start() {
+  start() {
     if (this.config.cert.selfsigned) {
       process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
       const keys = certificate.create(this.config.cert.valid);

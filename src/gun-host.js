@@ -2,7 +2,7 @@ const Server = require('./server');
 const GunPromise = require('./gun-promise');
 
 /**
-* A class to access Gun DB
+* Serve Gun DB functionality
 */
 class GunHost {
   /**
