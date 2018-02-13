@@ -64,8 +64,9 @@ class Server {
   start() {
     if (this.config.cert.selfsigned) {
       process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-      const keys = certificate.create(this.config.cert.valid);
-      return this.runHapi(keys);
+      return certificate.create(this.config.cert.valid).then((keys) => {
+        return this.runHapi(keys);
+      });
     }
     const keys = {
       serviceKey: this.config.cert.key,
