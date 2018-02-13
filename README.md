@@ -14,7 +14,7 @@ The example illustrates creating cluster node `sentinl`, adding a child node `ho
 
 ## Init and start host
 ```
-const GunHost = require('../src/gun-host');
+const GunHost = require('gun-host');
 
 const config = {
   enabled: true,
