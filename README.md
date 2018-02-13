@@ -31,7 +31,7 @@ const config = {
   },
   gun: {
     port: 9000,
-    host: 'localhost',
+    host: '0.0.0.0',
     cache: 'data.json',
     peers: ['https://localhost:9000/gun'],
   },
