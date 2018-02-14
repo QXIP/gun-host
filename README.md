@@ -26,8 +26,8 @@ const config = {
   cert: {
     selfsigned: true,
     valid: 10,
-    key: null,
-    cert: null,
+    key: null, // full sys path to pem key file
+    cert: null, // full sys path to cert file
   },
   gun: {
     port: 9000,

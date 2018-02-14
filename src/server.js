@@ -1,3 +1,4 @@
+const fs = require('fs');
 const gun = require('gun');
 const Hapi = require('hapi');
 const Promise = require('bluebird');
@@ -17,8 +18,8 @@ class Server {
   *        {object} cert:
   *               {boolean} selfsigned - certificate
   *               {integer} valid - for n days
-  *               {string} key - pem
-  *               {string} cert
+  *               {string} key - full sys path for pem key
+  *               {string} cert - full sys path for certificate
   */
   constructor(config) {
     this.config = config;
@@ -69,8 +70,8 @@ class Server {
       });
     }
     const keys = {
-      serviceKey: this.config.cert.key,
-      certificate: this.config.cert.cert,
+      serviceKey: fs.readFileSync(this.config.cert.key),
+      certificate: fs.readFileSync(this.config.cert.cert),
     };
     return this.runHapi(keys);
   }
