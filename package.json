@@ -1,6 +1,6 @@
 {
   "name": "gun-host",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -9,15 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sergibondarenko/gun-host.git"
+    "url": "git+https://github.com:QXIP/gun-host.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/sergibondarenko/gun-host/issues"
+    "url": "https://github.com:QXIP/gun-host/issues"
   },
-  "homepage": "https://github.com/sergibondarenko/gun-host#readme",
+  "homepage": "https://github.com:QXIP/gun-host#readme",
   "dependencies": {
     "bluebird": "3.5.1",
     "gun": "0.9.93",
