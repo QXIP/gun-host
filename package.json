@@ -1,30 +1,31 @@
 {
   "name": "gun-host",
   "version": "0.0.1",
-  "description": "",
+  "description": "It is a lib to run [Gun](http://gun.js.org) host in Node.js",
   "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
   "scripts": {
     "start": "node bootstrap.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com:QXIP/gun-host.git"
+    "url": "git+https://github.com/QXIP/gun-host.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com:QXIP/gun-host/issues"
+    "url": "https://github.com/QXIP/gun-host/issues"
   },
-  "homepage": "https://github.com:QXIP/gun-host#readme",
+  "homepage": "https://github.com/QXIP/gun-host#readme",
   "dependencies": {
     "bluebird": "3.5.1",
     "gun": "0.9.93",
     "hapi": "16.6.2",
     "lodash": "4.17.5",
     "pem": "1.12.3"
-  },
-  "devDependencies": {
   }
 }
