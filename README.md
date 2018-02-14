@@ -1,99 +1,134 @@
 # gun-host
-It is a HTTP/HTTPS host to facilitate usage of [Gun](http://gun.js.org) 
+It is a lib to run [Gun](http://gun.js.org) host in Node.js
 
-1. [Run](#run)
-2. [API](#api)
-3. [Development](#development)
-4. [Docker](#docker)
+1. [Install](#install)
+2. [Usage](#usage)
 
-# Run
-All the following instructions are for Linux.
-## Install Node.js
-Use [NVM](https://github.com/creationix/nvm) to manage Node.js versions. Remove existing Node.js if it was not installed via NVM. Install it via NVM.
-1. Go into app directory
+# Install
 ```
-cd gun-host
-```
-2. Check the required version
-```
-cat .node_version 
-8.9.4
-```
-3. Install
-```
-nvm install 8.9.4
-```
-4. Switch to the installed version
-```
-nvm use 8.9.4
-``` 
-## Config host
-To config the host, edit properties in `server/config.js`.
-
-## Run host
-```
-npm start
+npm install --save https://github.com/QXIP/gun-host
 ```
 
-# API
-## Add
-Create `dinos.456` node. 
-```
-curl -H "Content-Type: application/json" -d '{"path": "dinos.456", "node": {"name": "velociraptor", "speed": 50, "force": 20}}' -X POST http://localhost:7001/node/create 
-```
-```
-{"_":{"#":"jcuri9qkWxVJXvqCZpTZ",">":{"name":1516901686580.001,"speed":1516901686580.001,"force":1516901686580.001}},"name":"velociraptor","speed":50,"force":20}
-```
-## Get
-Get `dinos.456` node. 
-```
-curl -H "Content-Type: application/json" -d '{"path": "dinos.456"}' -X POST http://localhost:7001/node/get
-```
-```
-{"name":"velociraptor","speed":50,"force":20}
-```
-Get all nodes under `dinos`.
-```
-curl -H "Content-Type: application/json" -d '{"path": "dinos"}' -X POST http://localhost:7001/node/get
-```
-```
-{"456":{"name":"velociraptor","speed":50,"force":20}}
-```
-## Delete
-```
-curl -H "Content-Type: application/json" -d '{"path": "dinos.456"}' -X POST http://localhost:7001/node/delete
-```
+# Usage
+The example illustrates creating cluster node `sentinl`, adding a child node `hosts`, then adding `config.host` node as a child of `hosts`.
 
-# Development
-## Install dev tools
+## Init and start host
 ```
-npm install -g eslint eslint-babel nodemon eslint-config-google
-```
-## Test
-```
-npm run test
-```
+const GunHost = require('gun-host');
 
-# Docker
-## Create image
+const config = {
+  enabled: true,
+  name: 'sentinl',
+  priority_for_master: 0,
+  absent_time_for_delete: 86400,
+  absent_time: 15,
+  loop_delay: 5,
+  cert: {
+    selfsigned: true,
+    valid: 10,
+    key: null, // full sys path to pem key file
+    cert: null, // full sys path to cert file
+  },
+  gun: {
+    port: 9000,
+    host: '0.0.0.0',
+    cache: 'data.json',
+    peers: ['https://localhost:9000/gun'],
+  },
+  host: {
+    id: '123',
+    name: 'velociraptor',
+    priority: 0,
+    node: 'hosts',
+  },
+};
+
+const node = new GunHost({
+  peers: config.gun.peers,
+  rootNodeName: config.name,
+});
+
+const main = async function() {
+  try {
+    let resp = await node.start({
+      host: config.gun.host,
+      port: config.gun.port,
+      cache: config.gun.cache,
+      cert: config.cert,
+    });
+    console.log('1. Start server:', resp);
+
+    resp = await node.add(`${config.host.node}.${config.host.id}`, config.host);
+    console.log('2. Add node:', resp);
+
+    resp = await node.get(config.host.node);
+    console.log('3. Get node:', resp);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+main();
 ```
-docker build -t <your username>/gun-host .
+Gun holds
+```
+root: {
+  senitnl: {}
+}
 
 ```
-## Run container
+## Add/get data
 ```
-docker run -p 0.0.0.0::7000 -p 0.0.0.0::7001 -p 0.0.0.0::8000 -p 0.0.0.0::8001 -d sergibondarenko/gun-host
+const addData = async function() {
+  try {
+    resp = await node.add(`${config.host.node}.${config.host.id}`, config.host);
+    console.log('2. Add node:', resp);
+
+    resp = await node.get(config.host.node);
+    console.log('3. Get node:', resp);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+addData();
 ```
-## Test
-### Show the running container process, binded network ports, status etc.
+Gun holds
 ```
-docker ps
+root: {
+  setninl: {
+    hosts: {
+      '123': {
+        id: '123',
+        name: 'velociraptor',
+        priority: 0,
+        node: 'hosts',
+      }
+    }
+  }
+}
 ```
-### Show logs
+## Delete data
 ```
-docker logs <container id>
+const delete = async function() {
+  try {
+    resp = await node.delete(`${config.host.node}.${config.host.id}`);
+    console.log('4. Delete node:', resp);
+
+    resp = await node.get(config.host.node);
+    console.log('5. Check if node exists after removing', resp);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+delete();
 ```
-## Enter the container
+Gun holds
 ```
-docker exec -it <container id> /bin/bash
+root: {
+  setninl: {
+    hosts: {}
+  }
+}
 ```

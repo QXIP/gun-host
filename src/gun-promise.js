@@ -1,14 +1,14 @@
-import Promise from 'bluebird';
-import {forEach} from 'lodash';
-import Gun from 'gun';
+const Promise = require('bluebird');
+const {forEach} = require('lodash');
+const Gun = require('gun');
 require('gun/lib/path');
 require('gun/lib/load');
 require('gun/lib/then');
 
 /**
-* A class to manage Gun nodes.
+* Abstract access to Gun DB
 */
-class Node {
+class GunPromise {
   /**
   * Constructor
   *
@@ -21,7 +21,6 @@ class Node {
     this.node = this.gun.get(name);
   }
 
-
   /**
   * Get object and all its children
   *
@@ -29,25 +28,22 @@ class Node {
   * @param {boolean} filterNull - filter 'null' values in the 1st level
   * @return {array} value
   */
-  load(pathway, filterNull = true) { // async/await is not used here because it doesn't work with Gun .load()
+  load(pathway, filterNull = true) {
     return this.exists(pathway).then((exists) => {
       if (!exists) {
         return null;
       }
-
       return new Promise((resolve, reject) => {
         this.node.path(pathway).load(function(object) {
           if (!filterNull) {
             resolve(object);
           }
-
           const result = {};
           forEach(object, function(value, key) {
             if (value) {
               result[key] = value;
             }
           });
-
           resolve(result);
         });
       });
@@ -61,8 +57,15 @@ class Node {
   * @param {object} value
   * @return {object} new Gun node which contains value properties
   */
-  async put(pathway, value) {
-    return await this.node.path(pathway).put(value).then();
+  put(pathway, value) {
+    return new Promise((resolve, reject) => {
+      return this.node.path(pathway).put(value, function(ack) {
+        if (ack.error) {
+          reject(ack.error);
+        }
+        resolve(ack);
+      });
+    });
   }
 
   /**
@@ -71,9 +74,12 @@ class Node {
   * @param {string} pathway - a.b.c or a
   * @return {boolean}
   */
-  async exists(pathway) {
-    const value = await this.node.path(pathway).val().then();
-    return value ? true : false;
+  exists(pathway) {
+    return new Promise((resolve, reject) => {
+      this.node.path(pathway).val(function(value) {
+        resolve(value ? true : false);
+      }); 
+    }); 
   }
 
   /**
@@ -82,20 +88,29 @@ class Node {
   * @param {string} pathway - a.b.c or a
   * @return {object} value
   */
-  async path(pathway) {
-    return await this.node.path(pathway).val().then();
+  path(pathway) {
+    return new Promise((resolve, reject) => {
+      this.node.path(pathway).val(function(value) {
+        resolve(value);
+      });
+    });
   }
 
   /**
   * Delete data
   *
   * @param {string} pathway - a.b.c or a
-  * @return {object} message
+  * @return {string} message
   */
-  async delete(pathway) {
-    await this.node.path(pathway).put(null).then();
-    return {message: 'deleted'};
+  delete(pathway) {
+    return new Promise((resolve, reject) => {
+      // Gun bug, unable to delete a value: https://github.com/amark/gun/issues/456
+      // 'null' put here to facilitate filtering deleted values
+      this.node.path(pathway).put(null);
+      // Gun bug, .put(cb) callback is not resolved if value is null: https://github.com/amark/gun/issues/453
+      resolve(null);
+    });
   }
 }
 
-export default Node;
+module.exports = GunPromise;
