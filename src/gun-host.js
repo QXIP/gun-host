@@ -32,7 +32,7 @@ class GunHost {
   *
   * @param {string} path for node
   * @param {object} node to add
-  * @return {object} added node
+  * @return {object} ack
   */
   add(path, node) {
     return this.host.put(path, node);

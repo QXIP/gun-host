@@ -55,7 +55,7 @@ class GunPromise {
   *
   * @param {string} pathway - a.b.c or a
   * @param {object} value
-  * @return {object} new Gun node which contains value properties
+  * @return {object} ack
   */
   put(pathway, value) {
     return new Promise((resolve, reject) => {
@@ -72,14 +72,14 @@ class GunPromise {
   * Check if value exists
   *
   * @param {string} pathway - a.b.c or a
-  * @return {boolean}
+  * @return {boolean} exist
   */
   exists(pathway) {
     return new Promise((resolve, reject) => {
       this.node.path(pathway).val(function(value) {
         resolve(value ? true : false);
-      }); 
-    }); 
+      });
+    });
   }
 
   /**
@@ -108,7 +108,7 @@ class GunPromise {
       // 'null' put here to facilitate filtering deleted values
       this.node.path(pathway).put(null);
       // Gun bug, .put(cb) callback is not resolved if value is null: https://github.com/amark/gun/issues/453
-      resolve(null);
+      resolve({err: null, ok: 1});
     });
   }
 }
