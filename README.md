@@ -3,6 +3,7 @@ It is a lib to run [Gun](http://gun.js.org) host in Node.js
 
 1. [Install](#install)
 2. [Usage](#usage)
+3. [Development](#development)
 
 # Install
 ```
@@ -131,4 +132,17 @@ root: {
     hosts: {}
   }
 }
+```
+# Development
+## Install libs
+```
+npm install -g eslint eslint-config-google nyc 
+```
+## Test
+```
+npm run rest
+```
+## Run examples
+```
+node examples/usage.js
 ```
